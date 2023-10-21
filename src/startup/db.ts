@@ -7,8 +7,9 @@ const sequelize = new Sequelize(
     host: '127.0.0.1',
     dialect: 'mysql',
     password: "12345678",
-    username: "root"
+    username: "root",
   },
 )
+sequelize.sync({force: true})
 
 export default sequelize;
