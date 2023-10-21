@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../../models/user"));
 const bcrypt = __importStar(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
+require("dotenv/config");
 class AuthController {
     register(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -69,16 +70,15 @@ class AuthController {
     }
     login(request, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = request.body;
             // check user
-            const user = yield user_1.default.findOne({ where: { email: email } });
+            const user = yield user_1.default.findOne({ where: { email: request.body.email } });
             if (!user) {
                 return reply.code(404).send({
                     message: "User not found",
                 });
             }
             // check password
-            const isValid = yield bcrypt.compare(password, user.dataValues.password);
+            const isValid = yield bcrypt.compare(request.body.password, user.dataValues.password);
             if (!isValid) {
                 return reply.code(400).send({
                     message: "password or email is Invalid",
@@ -86,9 +86,7 @@ class AuthController {
             }
             // create token
             const secretKey = process.env.JWT_KEY;
-            const accessToken = jwt.sign({ id: user.dataValues.id }, secretKey, {
-                expiresIn: "5d"
-            });
+            const accessToken = jwt.sign({ id: user.dataValues.id }, secretKey);
             reply.code(200).send({
                 message: "successfuly logged in",
                 accessToken: accessToken

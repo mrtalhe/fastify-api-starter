@@ -12,23 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = __importDefault(require("./startup/db"));
-const fastify_1 = __importDefault(require("fastify"));
-const routers_1 = __importDefault(require("./routers"));
-require("dotenv/config");
-const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    const app = (0, fastify_1.default)({
-        logger: true,
+const controller_1 = __importDefault(require("./controller"));
+const auth_1 = __importDefault(require("../../middleware/auth"));
+function authRouter(fastify) {
+    return __awaiter(this, void 0, void 0, function* () {
+        fastify.route({
+            method: 'get',
+            url: '/',
+            handler: controller_1.default.products,
+            preHandler: [
+                auth_1.default
+            ]
+        });
     });
-    db_1.default;
-    app.register(routers_1.default, { prefix: "/api" });
-    try {
-        yield app.listen({ port: 3000 });
-        app.server.address();
-    }
-    catch (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-});
-start();
+}
+exports.default = authRouter;

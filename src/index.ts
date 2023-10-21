@@ -3,7 +3,7 @@ import Fastify, {
   FastifyInstance,
 } from "fastify";
 import routers from "./routers";
-import fastify from "fastify";
+import 'dotenv/config'
 
 const start = async () => {
 
