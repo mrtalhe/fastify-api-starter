@@ -7,7 +7,6 @@ class AuthController {
 
   async register(request: FastifyRequest, reply: FastifyReply) {
     const { name, email, password }: any = request.body;
-
     // Find a user by email
     const user = await User.findOne({
       where: { email: email },
@@ -21,7 +20,7 @@ class AuthController {
     // hash user password
    const salt = await bcrypt.genSalt(10);
    const hash =  await bcrypt.hash(password, salt);
-    // save user to db
+    // create and save user to db
    const newUser = await User.create({
       name,
       email,

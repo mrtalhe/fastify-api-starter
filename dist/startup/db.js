@@ -7,5 +7,5 @@ const sequelize = new sequelize_1.Sequelize('mysql://127.0.0.1:3306/mysql', {
     password: "12345678",
     username: "root",
 });
-sequelize.sync({ force: true });
+sequelize.sync({ force: false });
 exports.default = sequelize;

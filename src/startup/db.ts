@@ -10,6 +10,6 @@ const sequelize = new Sequelize(
     username: "root",
   },
 )
-sequelize.sync({force: true})
+sequelize.sync({force: false})
 
 export default sequelize;

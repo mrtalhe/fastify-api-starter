@@ -54,7 +54,7 @@ class AuthController {
             // hash user password
             const salt = yield bcrypt.genSalt(10);
             const hash = yield bcrypt.hash(password, salt);
-            // save user to db
+            // create and save user to db
             const newUser = yield user_1.default.create({
                 name,
                 email,

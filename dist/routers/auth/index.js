@@ -15,8 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const controller_1 = __importDefault(require("./controller"));
 function authRouter(fastify) {
     return __awaiter(this, void 0, void 0, function* () {
-        fastify.post("/register", controller_1.default.register);
-        fastify.post("/login", controller_1.default.login);
+        fastify.route({
+            method: 'post',
+            url: '/register',
+            handler: controller_1.default.register,
+        });
+        fastify.route({
+            method: 'post',
+            url: '/login',
+            handler: controller_1.default.login,
+        });
     });
 }
 exports.default = authRouter;

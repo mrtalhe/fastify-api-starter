@@ -6,8 +6,17 @@ import controller from "./controller";
 async function authRouter(fastify: FastifyInstance) {
 
 
-  fastify.post("/register", controller.register);
-  fastify.post("/login", controller.login);
+  fastify.route({
+    method: 'post',
+    url: '/register',
+    handler: controller.register,
+  })
+  
+  fastify.route({
+    method: 'post',
+    url: '/login',
+    handler: controller.login,
+  })
 }
 
 export default authRouter;
