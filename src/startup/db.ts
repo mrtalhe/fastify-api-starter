@@ -1,15 +1,24 @@
-import { Sequelize } from 'sequelize';
+import knex from "knex";
 
-
-const sequelize = new Sequelize(
-  'mysql://127.0.0.1:3306/mysql',
-  {
-    host: '127.0.0.1',
-    dialect: 'mysql',
+const db = knex({
+  client: "mysql2",
+  connection: {
+    host: "localhost",
+    user: "root",
     password: "12345678",
-    username: "root",
+    database: "mysql",
   },
-)
-sequelize.sync({force: false})
+  useNullAsDefault: true
+  
+});
 
-export default sequelize;
+db.raw('SELECT 1+1 AS result')
+  .then(() => {
+    console.log('connected to db');
+  })
+  .catch((error) => {
+    console.error('cannot connect to db', error);
+  });
+
+
+export default db

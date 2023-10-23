@@ -2,7 +2,7 @@ import connectDb from "./startup/db";
 import Fastify, {
   FastifyInstance,
 } from "fastify";
-import routers from "./routers";
+import userRoutes from "./modules/user/user.routes"
 import 'dotenv/config'
 
 const start = async () => {
@@ -11,9 +11,10 @@ const start = async () => {
     logger: true,
   });
 
-  connectDb;
-  app.register(routers, { prefix: "/api" });
-
+  connectDb
+  console.log(connectDb);
+  
+  app.register(userRoutes, {prefix: "api/users"})
   try {
 
     await app.listen({ port: 3000 });
