@@ -3,11 +3,14 @@ import userRoutes from "./modules/user/user.routes";
 import "dotenv/config";
 
 const start = async () => {
+
   const app: FastifyInstance = Fastify({
     logger: true,
   });
 
   app.register(userRoutes, { prefix: "api/users" });
+
+  
   try {
     await app.listen({ port: 3000 });
     app.server.address();
