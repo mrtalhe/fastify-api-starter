@@ -2,12 +2,15 @@ import Fastify, { FastifyInstance } from "fastify";
 import userRoutes from "./modules/user/user.routes";
 import * as dotenv from "dotenv";
 
+
 const start = async () => {
   dotenv.config();
 
   const app: FastifyInstance = Fastify({
     logger: true,
   });
+
+
 
   app.register(userRoutes, { prefix: "api/users" });
   try {
