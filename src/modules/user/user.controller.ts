@@ -10,7 +10,7 @@ class UserController {
     reply: FastifyReply
   ) {
     const userService = container.resolve("userService");
-
+    // get data from body
     const { name, email, password } = request.body;
     // find user by email
     const user = await userService.findUserByEmail(email);
@@ -55,18 +55,22 @@ class UserController {
         message: "invalid email or password",
       });
     }
+    // create token and send for user
     const token = await userService.createToken(user.id, process.env.JWT_KEY!);
     return reply.code(200).send({
       message: "successfuly logged in",
-      data: token,
+      accessToken: token,
     });
   }
 
-  async getAllUsersHandler() {
+  async getAllUsersHandler(request: FastifyRequest, reply: FastifyReply) {
     const userService = container.resolve("userService");
     const users = await userService.getAllUsers();
-    return users;
+    return reply.code(200).send({
+      message: "all users!",
+      data: users,
+    });
   }
 }
 
-export default new UserController;
+export default new UserController();

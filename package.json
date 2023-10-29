@@ -27,6 +27,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@fastify/cors": "^8.4.1",
     "@fastify/express": "^2.3.0",
     "@fastify/mongodb": "^8.0.0",
     "@fastify/mysql": "^4.1.0",
