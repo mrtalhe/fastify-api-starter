@@ -1,4 +1,4 @@
-import { Lifetime, createContainer, asClass } from "awilix";
+import { Lifetime, createContainer, asClass, AwilixContainer } from "awilix";
 import prisma from "../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
@@ -54,10 +54,6 @@ class UserService {
   }
 }
 
-const container = createContainer();
 
-container.register({
-  userService: asClass(UserService, { lifetime: Lifetime.SINGLETON }),
-});
 
-export default container;
+export default UserService

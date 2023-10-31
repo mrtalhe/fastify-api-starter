@@ -3,12 +3,17 @@ import userRoutes from "./modules/user/user.routes";
 import * as dotenv from "dotenv";
 import { userSchemas } from "./modules/user/user.schema";
 
+
+
+
 const start = async () => {
   dotenv.config();
-
+  
   const app: FastifyInstance = Fastify({
     logger: true,
   });
+
+
 
   for (const schema of [...userSchemas]) {
     app.addSchema(schema);

@@ -1,28 +1,34 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateUserInput, LoginInput } from "./user.schema";
-import container from "./user.service";
-
+import UserService from "./user.service";
+import container from "../../utils/di-setup";
+const userServiceDev  = container.resolve("userService")
 class UserController {
+  constructor(private readonly userService: UserService) {
+    this.userService = userServiceDev
+  }
+  
   async rigsterUserHandler(
     request: FastifyRequest<{
       Body: CreateUserInput;
     }>,
     reply: FastifyReply
   ) {
-    const userService = container.resolve("userService");
+    console.log(this.userService);
+    
     // get data from body
     const { name, email, password } = request.body;
     // find user by email
-    const user = await userService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (user) {
       return reply.code(400).send({
         message: "The user has already registered",
       });
     }
     // hash user password
-    const hashedPassword = await userService.hashUserPassword(password);
+    const hashedPassword = await this.userService.hashUserPassword(password);
     // register User
-    const newUser = await userService.createUser({
+    const newUser = await this.userService.createUser({
       name,
       email,
       password: hashedPassword,
@@ -40,23 +46,23 @@ class UserController {
     reply: FastifyReply
   ) {
     const { email, password } = request.body;
-    const userService = container.resolve("userService");
+
     // check user
-    const user = await userService.findUserByEmail(email);
+    const user = await this.userService.findUserByEmail(email);
     if (!user) {
       return reply.code(400).send({
         message: "invalid email or password",
       });
     }
     // check password
-    const isValid = await userService.comparePassword(password, user.password);
+    const isValid = await this.userService.comparePassword(password, user.password);
     if (!isValid) {
       return reply.code(400).send({
         message: "invalid email or password",
       });
     }
     // create token and send for user
-    const token = await userService.createToken(user.id, process.env.JWT_KEY!);
+    const token = await this.userService.createToken(user.id, process.env.JWT_KEY!);
     return reply.code(200).send({
       message: "successfuly logged in",
       accessToken: token,
@@ -64,8 +70,8 @@ class UserController {
   }
 
   async getAllUsersHandler(request: FastifyRequest, reply: FastifyReply) {
-    const userService = container.resolve("userService");
-    const users = await userService.getAllUsers();
+
+    const users = await this.userService.getAllUsers();
     return reply.code(200).send({
       message: "all users!",
       data: users,
@@ -73,4 +79,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default UserController;

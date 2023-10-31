@@ -8,16 +8,16 @@ async function userRoutes(server: FastifyInstance) {
     method: "POST",
     url: "/register",
     schema: { body: $ref("createUserSchema") },
-    handler: userController.rigsterUserHandler,
+    handler: userController.prototype.rigsterUserHandler,
   });
   server.route({
     method: "POST",
     url: "/login",
     schema: { body: $ref("loginSchema") },
-    handler: userController.loginUserHandler,
+    handler: userController.prototype.loginUserHandler,
   });
 
-  server.get("/", UserController.getAllUsersHandler);
+  server.get("/", UserController.prototype.getAllUsersHandler);
 }
 
 export default userRoutes;
