@@ -1,21 +1,23 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateUserInput, LoginInput } from "./user.schema";
 import UserService from "./user.service";
-import container from "../../utils/di-setup";
-const userServiceDev  = container.resolve("userService")
+import { FastifyInstance } from "fastify/types/instance";
+import container from "../../plugins/di.config";
+
+
 class UserController {
-  constructor(private readonly userService: UserService) {
-    this.userService = userServiceDev
+  private userService: UserService;
+  constructor() {
+    const userServices =  container.resolve("userService")
+    this.userService = userServices
   }
-  
-  async rigsterUserHandler(
-    request: FastifyRequest<{
-      Body: CreateUserInput;
-    }>,
+
+  rigsterUserHandler = async (
+    request: FastifyRequest<{ Body: CreateUserInput }>,
     reply: FastifyReply
-  ) {
+  ) => {
     console.log(this.userService);
-    
+
     // get data from body
     const { name, email, password } = request.body;
     // find user by email
@@ -37,14 +39,14 @@ class UserController {
       message: "User registered successfully",
       data: newUser,
     });
-  }
+  };
 
-  async loginUserHandler(
+  loginUserHandler = async(
     request: FastifyRequest<{
       Body: LoginInput;
     }>,
     reply: FastifyReply
-  ) {
+  ) => {
     const { email, password } = request.body;
 
     // check user
@@ -55,22 +57,27 @@ class UserController {
       });
     }
     // check password
-    const isValid = await this.userService.comparePassword(password, user.password);
+    const isValid = await this.userService.comparePassword(
+      password,
+      user.password
+    );
     if (!isValid) {
       return reply.code(400).send({
         message: "invalid email or password",
       });
     }
     // create token and send for user
-    const token = await this.userService.createToken(user.id, process.env.JWT_KEY!);
+    const token = await this.userService.createToken(
+      user.id,
+      process.env.JWT_KEY!
+    );
     return reply.code(200).send({
       message: "successfuly logged in",
       accessToken: token,
     });
   }
 
-  async getAllUsersHandler(request: FastifyRequest, reply: FastifyReply) {
-
+   getAllUsersHandler = async(request: FastifyRequest, reply: FastifyReply) => {
     const users = await this.userService.getAllUsers();
     return reply.code(200).send({
       message: "all users!",

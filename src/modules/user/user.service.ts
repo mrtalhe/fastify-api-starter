@@ -1,8 +1,9 @@
-import { Lifetime, createContainer, asClass, AwilixContainer } from "awilix";
 import prisma from "../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { CreateUserInput } from "./user.schema";
+
+
 
 class UserService {
   // create user
@@ -53,6 +54,8 @@ class UserService {
     return token;
   }
 }
+
+
 
 
 

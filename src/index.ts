@@ -1,23 +1,23 @@
 import Fastify, { FastifyInstance } from "fastify";
-import userRoutes from "./modules/user/user.routes";
+import User from "./modules/user/user.routes";
 import * as dotenv from "dotenv";
 import { userSchemas } from "./modules/user/user.schema";
-
+import diConfig from "./plugins/di.config";
+import userRoutes from "./modules/user/user.routes";
 
 
 
 const start = async () => {
   dotenv.config();
-  
+
   const app: FastifyInstance = Fastify({
     logger: true,
   });
 
-
-
   for (const schema of [...userSchemas]) {
     app.addSchema(schema);
   }
+ 
 
   app.register(userRoutes, { prefix: "api/users" });
   try {
