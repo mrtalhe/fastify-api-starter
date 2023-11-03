@@ -27,6 +27,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@fastify/awilix": "^4.0.0",
     "@fastify/cors": "^8.4.1",
     "@fastify/express": "^2.3.0",
     "@fastify/mongodb": "^8.0.0",
@@ -34,13 +35,14 @@
     "@inaiat/fastify-di-plugin": "^1.1.1",
     "@prisma/client": "^5.5.2",
     "auto-bind": "^4.0.0",
-    "awilix": "^7.0.3",
+    "awilix": "^9.0.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "fastify-plugin": "^4.5.1",
     "fastify-zod": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
+    "or": "^0.2.0",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.20.1"
   }

@@ -3,21 +3,21 @@ import UserController from "./user.controller";
 import { $ref } from "./user.schema";
 
 async function userRoutes(server: FastifyInstance) {
-
+  const {userControlleres} = server.diContainer.cradle
   server.route({
     method: "POST",
     url: "/register",
     schema: { body: $ref("createUserSchema") },
-    handler: UserController.prototype.rigsterUserHandler,
+    handler: userControlleres.rigsterUserHandler,
   });
   server.route({
     method: "POST",
     url: "/login",
     schema: { body: $ref("loginSchema") },
-    handler: UserController.prototype.loginUserHandler,
+    handler: userControlleres.loginUserHandler,
   });
 
-  server.get("/", UserController.prototype.getAllUsersHandler);
+  server.get("/", userControlleres.getAllUsersHandler);
 }
 
 export default userRoutes;

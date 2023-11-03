@@ -2,20 +2,20 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateUserInput, LoginInput } from "./user.schema";
 import UserService from "./user.service";
 import { FastifyInstance } from "fastify/types/instance";
-import container from "../../plugins/di.config";
-
+import autoBind from "auto-bind";
 
 class UserController {
   private userService: UserService;
-  constructor() {
-    const userServices =  container.resolve("userService")
+  constructor(private readonly server: FastifyInstance) {
+    const {userServices} =  this.server.diContainer.cradle
     this.userService = userServices
+    autoBind(this)
   }
 
-  rigsterUserHandler = async (
+ async rigsterUserHandler(
     request: FastifyRequest<{ Body: CreateUserInput }>,
     reply: FastifyReply
-  ) => {
+  ) {
     console.log(this.userService);
 
     // get data from body
@@ -41,12 +41,12 @@ class UserController {
     });
   };
 
-  loginUserHandler = async(
+ async loginUserHandler(
     request: FastifyRequest<{
       Body: LoginInput;
     }>,
     reply: FastifyReply
-  ) => {
+  ){
     const { email, password } = request.body;
 
     // check user
@@ -77,7 +77,7 @@ class UserController {
     });
   }
 
-   getAllUsersHandler = async(request: FastifyRequest, reply: FastifyReply) => {
+  async getAllUsersHandler(request: FastifyRequest, reply: FastifyReply) {
     const users = await this.userService.getAllUsers();
     return reply.code(200).send({
       message: "all users!",
