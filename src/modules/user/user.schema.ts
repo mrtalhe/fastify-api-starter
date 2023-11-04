@@ -1,18 +1,15 @@
-
-import {Static, Type} from '@sinclair/typebox'
+import { Static, Type } from "@sinclair/typebox";
 
 export const createUserSchema = Type.Object({
-	name: Type.String({maxLength: 30}),
-	email: Type.String({maximum: 50, minimum: 18, format: 'email'}),
-	password: Type.String({minLength: 8, maxLength: 20}),
+  name: Type.String({ maxLength: 30 }),
+  email: Type.String({ maximum: 50, minimum: 18, format: "email" }),
+  password: Type.String({ minLength: 8, maxLength: 20 }),
 });
 export const loginSchema = Type.Object({
-	email: Type.String({maximum: 50, minimum: 18, format: 'email'}),
-	password: Type.String({minLength: 8, maxLength: 20}),
+  email: Type.String({ maximum: 50, minimum: 18, format: "email" }),
+  password: Type.String({ minLength: 8, maxLength: 20 }),
 });
 
+export type CreateUserInput = Static<typeof createUserSchema>;
 
-export type CreateUserInput = Static<typeof createUserSchema>
-
-export type LoginInput = Static<typeof loginSchema>
-
+export type LoginInput = Static<typeof loginSchema>;

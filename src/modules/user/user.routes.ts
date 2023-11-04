@@ -1,9 +1,8 @@
 import { FastifyInstance } from "fastify/types/instance";
-import UserController from "./user.controller";
 import { createUserSchema, loginSchema } from "./user.schema";
 
 async function userRoutes(server: FastifyInstance) {
-  const {userControlleres} = server.diContainer.cradle
+  const { userControlleres } = server.diContainer.cradle;
   server.route({
     method: "POST",
     url: "/register",
@@ -21,7 +20,3 @@ async function userRoutes(server: FastifyInstance) {
 }
 
 export default userRoutes;
-
-
-
-

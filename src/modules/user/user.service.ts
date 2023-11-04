@@ -3,8 +3,6 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { CreateUserInput } from "./user.schema";
 
-
-
 class UserService {
   // create user
   async createUser(input: CreateUserInput) {
@@ -55,8 +53,4 @@ class UserService {
   }
 }
 
-
-
-
-
-export default UserService
+export default UserService;

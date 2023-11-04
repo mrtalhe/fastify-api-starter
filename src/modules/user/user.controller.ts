@@ -7,12 +7,12 @@ import autoBind from "auto-bind";
 class UserController {
   private userService: UserService;
   constructor(private readonly server: FastifyInstance) {
-    const {userServices} =  this.server.diContainer.cradle
-    this.userService = userServices
-    autoBind(this)
+    const { userServices } = this.server.diContainer.cradle;
+    this.userService = userServices;
+    autoBind(this);
   }
 
- async rigsterUserHandler(
+  async rigsterUserHandler(
     request: FastifyRequest<{ Body: CreateUserInput }>,
     reply: FastifyReply
   ) {
@@ -39,14 +39,14 @@ class UserController {
       message: "User registered successfully",
       data: newUser,
     });
-  };
+  }
 
- async loginUserHandler(
+  async loginUserHandler(
     request: FastifyRequest<{
       Body: LoginInput;
     }>,
     reply: FastifyReply
-  ){
+  ) {
     const { email, password } = request.body;
 
     // check user

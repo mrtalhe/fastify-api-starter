@@ -1,9 +1,8 @@
 import Fastify, { FastifyInstance } from "fastify";
 import * as dotenv from "dotenv";
 import userRoutes from "./modules/user/user.routes";
-import diConfig from "./plugins/di.config";
-
-
+import fastifyAutoload from "@fastify/autoload";
+import path from "path";
 
 const start = async () => {
   dotenv.config();
@@ -11,8 +10,10 @@ const start = async () => {
   const app: FastifyInstance = Fastify({
     logger: true,
   });
-
-  app.register(diConfig)
+  
+  await app.register(fastifyAutoload, {
+    dir: path.join(__dirname, "plugins"),
+  });
 
   app.register(userRoutes, { prefix: "api/users" });
   try {
