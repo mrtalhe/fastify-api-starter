@@ -5,11 +5,5 @@ export const createUserSchema = Type.Object({
   email: Type.String({ maximum: 50, minimum: 18, format: "email" }),
   password: Type.String({ minLength: 8, maxLength: 20 }),
 });
-export const loginSchema = Type.Object({
-  email: Type.String({ maximum: 50, minimum: 18, format: "email" }),
-  password: Type.String({ minLength: 8, maxLength: 20 }),
-});
 
 export type CreateUserInput = Static<typeof createUserSchema>;
-
-export type LoginInput = Static<typeof loginSchema>;

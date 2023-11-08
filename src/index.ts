@@ -10,12 +10,11 @@ const start = async () => {
   const app: FastifyInstance = Fastify({
     logger: true,
   });
-  
+
   await app.register(fastifyAutoload, {
     dir: path.join(__dirname, "plugins"),
   });
 
-  app.register(userRoutes, { prefix: "api/users" });
   try {
     await app.listen({ port: 3000 });
     app.server.address();

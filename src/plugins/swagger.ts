@@ -1,19 +1,20 @@
-import { FastifyPluginCallback } from 'fastify';
-import fastifySwagger from '@fastify/swagger';
+import { FastifyPluginAsync } from "fastify";
+import { fastifyPlugin } from "fastify-plugin";
+import FastifySwagger from "@fastify/swagger";
 
-const plugin: FastifyPluginCallback = (fastify, opts, done) => {
-  fastify.register(fastifySwagger, {
-    exposeRoute: true,
-    routePrefix: '/docs',
-    openapi: {
-      info: {
-        title: 'Fastify sample server',
-        description: 'Fastify sample api',
-        version: '0.1.0',
+export default fastifyPlugin<FastifyPluginAsync>(
+  async (fastify): Promise<void> => {
+    await fastify.register(FastifySwagger, {
+      exposeRoute: true,
+      routePrefix: "/docs",
+      openapi: {
+        info: {
+          title: "Fastify sample server",
+          description: "Fastify sample api",
+          version: "0.1.0",
+        },
       },
-    },
-  });
-  done();
-};
-
-export default plugin;
+    });
+  },
+  { name: "swagger" }
+);
