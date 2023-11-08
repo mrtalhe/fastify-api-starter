@@ -20,12 +20,8 @@ export default fastifyPlugin<FastifyPluginAsync>(
     await fastify.register(fastifyDiPlugin, {
       module: {
         userServices: asClass(UserService, { lifetime: Lifetime.SINGLETON }),
-        userControlleres: asClass(UserController, {
-          lifetime: Lifetime.SINGLETON,
-        }),
-        authControlleres: asClass(AuthController, {
-          lifetime: Lifetime.SINGLETON,
-        }),
+        userControlleres: asClass(UserController, {lifetime: Lifetime.SINGLETON,}),
+        authControlleres: asClass(AuthController, {lifetime: Lifetime.SINGLETON,}),
         server: asValue(fastify), // register FastifyInstance
       },
       injectionMode: "CLASSIC",

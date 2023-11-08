@@ -18,14 +18,14 @@ class UserController {
   ) {
     // get data from body
     const { name, email, password } = request.body;
-    // register User
+    // create User
     const newUser = await this.userService.createUser({
       name,
       email,
       password,
     });
     reply.code(200).send({
-      message: "User registered successfully",
+      message: "User Created successfully",
       data: newUser,
     });
   }
