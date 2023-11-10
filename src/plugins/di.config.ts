@@ -7,10 +7,12 @@ import UserController from "../modules/user/user.controller.js";
 import { FastifyInstance } from "fastify/types/instance.js";
 import AuthController from "../modules/auth/auth.controller.js";
 import { PrismaClient } from "@prisma/client";
+import { Env, appConfig } from "../config/app.config.js";
 
 
 declare module "@inaiat/fastify-di-plugin" {
   interface Cradle {
+    readonly config: Env;
     readonly userServices: UserService;
     readonly userControlleres: UserController;
     readonly authControlleres: AuthController;
@@ -29,6 +31,7 @@ export default fastifyPlugin<FastifyPluginAsync>(
         authControlleres: asClass(AuthController, {lifetime: Lifetime.SINGLETON,}),
         prisma: asValue(prisma), 
         server: asValue(fastify), 
+        config: asValue(appConfig()),
       },
       injectionMode: "CLASSIC",
     });

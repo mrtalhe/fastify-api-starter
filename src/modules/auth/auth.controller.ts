@@ -3,12 +3,15 @@ import autoBind from "auto-bind";
 import UserService from "../user/user.service";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { LoginInput, RegisterInput } from "./auth.schema";
+import { Env } from "../../config/app.config";
 
 class AuthController {
   private userService: UserService;
+  private config: Env;
   constructor(private readonly server: FastifyInstance) {
-    const { userServices } = this.server.diContainer.cradle;
+    const { userServices, config } = this.server.diContainer.cradle;
     this.userService = userServices;
+    this.config = config;
     autoBind(this);
   }
   async register(
@@ -62,7 +65,7 @@ class AuthController {
     // create token and send for user
     const token = await this.userService.createToken(
       user.id,
-      process.env.JWT_KEY!
+      this.config.JWT_KEY
     );
     return reply.code(200).send({
       message: "successfuly logged in",
