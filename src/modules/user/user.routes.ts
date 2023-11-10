@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify/types/instance";
 import { createUserSchema } from "./user.schema";
-import auth from "../../middleware/auth";
+import {auth,isAdmin} from "../../middleware/auth";
 
 async function userRoutes(server: FastifyInstance) {
   const { userControlleres } = server.diContainer.cradle;
@@ -16,7 +16,7 @@ async function userRoutes(server: FastifyInstance) {
     method: "GET",
     url: "/",
     handler: userControlleres.getAllUsersHandler,
-    preHandler: auth
+    preHandler: [auth,isAdmin]
   });
 
 }

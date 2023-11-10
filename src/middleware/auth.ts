@@ -28,4 +28,9 @@ async function auth(
   }
 }
 
-export default auth;
+async function isAdmin(request: CustomRequest,response: FastifyReply,next: (err?: Error) => void){
+    if(!request.user.isadmin) response.code(403).send('Access denied You are not an administrator');
+    next();
+}
+
+export {auth, isAdmin};
