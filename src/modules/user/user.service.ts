@@ -1,14 +1,20 @@
-import prisma from "../../utils/prisma";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { CreateUserInput } from "./user.schema";
+import { FastifyInstance } from "fastify/types/instance";
+import { PrismaClient } from "@prisma/client";
 
 class UserService {
+  private prisma: PrismaClient;
+  constructor(private server: FastifyInstance){
+    const {prisma} = this.server.diContainer.cradle
+    this.prisma = prisma
+  }
   // create user
   async createUser(input: CreateUserInput) {
     const { name, email, password } = input;
 
-    const user = await prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         name,
         email,
@@ -19,15 +25,15 @@ class UserService {
   }
   // find user by email
   async findUserByEmail(email: string) {
-    return await prisma.user.findUnique({ where: { email } });
+    return await this.prisma.user.findUnique({ where: { email } });
   }
   // find one user
   async findOneUser(email: string) {
-    return await prisma.user.findFirst({ where: { email } });
+    return await this.prisma.user.findFirst({ where: { email } });
   }
   // get all users
   async getAllUsers() {
-    return await prisma.user.findMany({
+    return await this.prisma.user.findMany({
       select: {
         email: true,
         name: true,
