@@ -19,6 +19,12 @@ async function userRoutes(server: FastifyInstance) {
     preHandler: [auth,isAdmin]
   });
 
+  server.route({
+    method: "DELETE",
+    url: "/delete/:id",
+    handler: userControlleres.deleteUserHandler,
+  });
+
 }
 
 export default userRoutes;

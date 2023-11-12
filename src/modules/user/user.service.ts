@@ -27,9 +27,9 @@ class UserService {
   async findUserByEmail(email: string) {
     return await this.prisma.user.findUnique({ where: { email } });
   }
-  // find one user
-  async findOneUser(email: string) {
-    return await this.prisma.user.findFirst({ where: { email } });
+  // find user by id
+  async findUserById(id: number) {
+    return await this.prisma.user.findUnique({ where: { id } });
   }
   // get all users
   async getAllUsers() {
@@ -56,6 +56,13 @@ class UserService {
   async createToken(userId: number, jwtKey: string) {
     const token = jwt.sign({ id: userId }, jwtKey);
     return token;
+  }
+  // delete user
+  async deleteUser(id: number){
+    const user = await this.prisma.user.delete({
+      where: {id: id}
+    })
+    return user
   }
 }
 
