@@ -1,30 +1,29 @@
 import { FastifyInstance } from "fastify/types/instance";
 import { createUserSchema } from "./user.schema";
-import {auth,isAdmin} from "../../middleware/auth";
+import {auth} from "../../middleware/auth";
 
 async function userRoutes(server: FastifyInstance) {
   const { userControlleres } = server.diContainer.cradle;
-  // create user
+
   server.route({
     method: "POST",
     url: "/create",
     schema: { body: createUserSchema },
     handler: userControlleres.createUser,
   });
-  // get all users
+
   server.route({
     method: "GET",
     url: "/",
     handler: userControlleres.getAllUsersHandler,
-    preHandler: [auth,isAdmin]
+    preHandler: [auth]
   });
-  // delete user
+
   server.route({
     method: "DELETE",
     url: "/delete/:id",
     handler: userControlleres.deleteUserHandler,
   });
-  // update user
   server.route({
     method: "PUT",
     url: "/update/:id",
