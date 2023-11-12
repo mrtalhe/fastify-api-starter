@@ -17,7 +17,7 @@ export default fastifyPlugin<FastifyPluginAsync>(async (fastify) => {
       fastify.log.error(error, `This error has status code ${statusCode}`);
       reply
         .code(statusCode >= 400 ? statusCode : 500)
-        .type("text/plain")
+        .type('application/json; charset=utf-8')
         .send(statusCode >= 500 ? "Internal server error" : error.message);
     }
   );

@@ -6,19 +6,20 @@ import { PrismaClient } from "@prisma/client";
 
 class UserService {
   private prisma: PrismaClient;
-  constructor(private server: FastifyInstance){
-    const {prisma} = this.server.diContainer.cradle
-    this.prisma = prisma
+  constructor(private server: FastifyInstance) {
+    const { prisma } = this.server.diContainer.cradle;
+    this.prisma = prisma;
   }
   // create user
   async createUser(input: CreateUserInput) {
-    const { name, email, password } = input;
-
     const user = await this.prisma.user.create({
+      select: {
+        name: true,
+        email: true,
+        id: true
+      },
       data: {
-        name,
-        email,
-        password,
+        ...input,
       },
     });
     return user;
@@ -58,21 +59,23 @@ class UserService {
     return token;
   }
   // delete user
-  async deleteUser(id: number){
+  async deleteUser(id: number) {
     const user = await this.prisma.user.delete({
-      where: {id: id}
-    })
-    return user
+      select: {email: true, name: true, id: true},
+      where: { id: id },
+    });
+    return user;
   }
   // update user
-  async updateUser(input: CreateUserInput, id: number){
-    const hashedPassword = await this.hashUserPassword(input.password)
+  async updateUser(input: CreateUserInput, id: number) {
+    const hashedPassword = await this.hashUserPassword(input.password);
     const user = await this.prisma.user.update({
+      select: {email: true, name: true, id: true},
       data: {
         ...input,
-        password: hashedPassword
+        password: hashedPassword,
       },
-      where: {id: id}
+      where: { id: id },
     });
     return user;
   }
