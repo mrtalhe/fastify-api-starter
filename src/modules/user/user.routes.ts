@@ -24,6 +24,12 @@ async function userRoutes(server: FastifyInstance) {
     url: "/delete/:id",
     handler: userControlleres.deleteUserHandler,
   });
+  server.route({
+    method: "PUT",
+    url: "/update/:id",
+    schema: { body: createUserSchema },
+    handler: userControlleres.updateUserHandler,
+  });
 
 }
 

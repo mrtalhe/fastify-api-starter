@@ -64,6 +64,18 @@ class UserService {
     })
     return user
   }
+  // update user
+  async updateUser(input: CreateUserInput, id: number){
+    const hashedPassword = await this.hashUserPassword(input.password)
+    const user = await this.prisma.user.update({
+      data: {
+        ...input,
+        password: hashedPassword
+      },
+      where: {id: id}
+    });
+    return user;
+  }
 }
 
 export default UserService;
