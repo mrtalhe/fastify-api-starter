@@ -32,7 +32,7 @@ class UserController {
   // get all users
   async getAllUsersHandler(request: FastifyRequest, reply: FastifyReply) {
     const users = await this.userService.getAllUsers();
-    return reply.code(200).send({
+    reply.code(200).send({
       message: "all users!",
       data: users,
     });

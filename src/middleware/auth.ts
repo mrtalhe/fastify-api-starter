@@ -1,9 +1,15 @@
 import * as jwt from "jsonwebtoken";
 import prisma from "../utils/prisma";
 import { FastifyRequest, FastifyReply } from "fastify";
-
+interface User {
+  id: number;
+  email: string;
+  password: string;
+  name: string | null;
+  isAdmin: boolean;
+}
 interface CustomRequest extends FastifyRequest {
-  user?: any;
+  user?: User;
 }
 async function auth(
   request: CustomRequest,
@@ -28,5 +34,10 @@ async function auth(
   }
 }
 
+async function isAdmin(request: CustomRequest,response: FastifyReply,next: (err?: Error) => void){
+  if(!request.user || !request.user.isAdmin) response.code(403).send('Access denied You are not an administrator');
+  next();
+}
 
-export {auth};
+
+export {auth,isAdmin};
