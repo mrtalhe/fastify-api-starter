@@ -74,6 +74,7 @@ class UserService {
       select: {email: true, name: true, id: true},
       data: {
         ...input,
+        isAdmin: false,
         password: hashedPassword,
       },
       where: { id: id },
