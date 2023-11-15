@@ -30,7 +30,8 @@ class UserService {
   }
   // find user by id
   async findUserById(id: number) {
-    return await this.prisma.user.findUnique({ where: { id } });
+    return await this.prisma.user.findUnique(
+      {select: {password: false, name: true, email: true, id: true}, where: { id } });
   }
   // get all users
   async getAllUsers() {

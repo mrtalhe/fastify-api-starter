@@ -17,7 +17,6 @@ async function userRoutes(server: FastifyInstance) {
     method: "GET",
     url: "/",
     handler: userControlleres.getAllUsersHandler,
-    preHandler: [auth,isAdmin]
   });
 
   server.route({

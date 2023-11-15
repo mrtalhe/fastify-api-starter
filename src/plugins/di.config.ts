@@ -8,6 +8,7 @@ import { FastifyInstance } from "fastify/types/instance.js";
 import AuthController from "../modules/auth/auth.controller.js";
 import { PrismaClient } from "@prisma/client";
 import { Env, appConfig } from "../config/app.config.js";
+import DashboardController from "../modules/dashboard/dashboard.controller.js";
 
 
 declare module "@inaiat/fastify-di-plugin" {
@@ -16,6 +17,7 @@ declare module "@inaiat/fastify-di-plugin" {
     readonly userServices: UserService;
     readonly userControlleres: UserController;
     readonly authControlleres: AuthController;
+    readonly dashboardControlleres: DashboardController;
     readonly prisma: PrismaClient;
     readonly server: FastifyInstance;
   }
@@ -29,6 +31,7 @@ export default fastifyPlugin<FastifyPluginAsync>(
         userServices: asClass(UserService, { lifetime: Lifetime.SINGLETON }),
         userControlleres: asClass(UserController, {lifetime: Lifetime.SINGLETON,}),
         authControlleres: asClass(AuthController, {lifetime: Lifetime.SINGLETON,}),
+        dashboardControlleres: asClass(DashboardController, {lifetime: Lifetime.SINGLETON,}),
         prisma: asValue(prisma), 
         server: asValue(fastify), 
         config: asValue(appConfig()),
