@@ -11,6 +11,7 @@ const schema = Type.Strict(
 
 export type NodeMailerEnv = Static<typeof schema>
 
+
 export const nodeMailerConfig = (): NodeMailerEnv => envSchema<NodeMailerEnv>({
 	dotenv: true,
 	schema,
