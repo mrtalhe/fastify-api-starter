@@ -15,7 +15,6 @@ declare module "fastify" {
   }
 
 const pluginLoader: FastifyPluginAsync = async (fastify) => {
-	
 	await fastify
 		.register(fastifyAutoload, {
 			dir: join(__dirname, '../plugins'),

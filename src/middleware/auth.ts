@@ -7,11 +7,11 @@ async function auth(
   reply: FastifyReply,
   next: (err?: Error) => void
 ) {
-  const { config } = request.server.diContainer.cradle;
+  const { appconfig } = request.server.diContainer.cradle;
   const token: string | any = request.headers["x-auth-token"];
   if (!token) reply.code(401).send("access denied");
   try {
-    const secretKey: string = config.JWT_KEY;
+    const secretKey: string = appconfig.JWT_KEY;
     const decoded: string | any = jwt.verify(token, secretKey);
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });
     if (user) {

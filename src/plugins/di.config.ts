@@ -8,12 +8,14 @@ import { FastifyInstance } from "fastify/types/instance.js";
 import AuthController from "../modules/auth/auth.controller.js";
 import { PrismaClient } from "@prisma/client";
 import { Env, appConfig } from "../config/app.config.js";
+import { NodeMailerEnv, nodeMailerConfig } from "../config/nodemailer.config.js";
 import DashboardController from "../modules/dashboard/dashboard.controller.js";
 
 
 declare module "@inaiat/fastify-di-plugin" {
   interface Cradle {
-    readonly config: Env;
+    readonly appconfig: Env;
+    readonly nodeMailerConfig: NodeMailerEnv;
     readonly userServices: UserService;
     readonly userControlleres: UserController;
     readonly authControlleres: AuthController;
@@ -34,7 +36,8 @@ export default fastifyPlugin<FastifyPluginAsync>(
         dashboardControlleres: asClass(DashboardController, {lifetime: Lifetime.SINGLETON,}),
         prisma: asValue(prisma), 
         server: asValue(fastify), 
-        config: asValue(appConfig()),
+        appconfig: asValue(appConfig()),
+        nodeMailerConfig: asValue(nodeMailerConfig()),
       },
       injectionMode: "CLASSIC",
     });

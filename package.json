@@ -16,6 +16,7 @@
         "@types/dotenv": "^8.2.0",
         "@types/jsonwebtoken": "^9.0.4",
         "@types/node": "^20.5.4",
+        "@types/nodemailer": "^6.4.14",
         "@typescript-eslint/eslint-plugin": "^6.9.0",
         "@typescript-eslint/parser": "^6.9.0",
         "eslint": "^8.52.0",
@@ -38,10 +39,12 @@
         "auto-bind": "^4.0.0",
         "awilix": "^9.0.0",
         "bcrypt": "^5.1.1",
+        "crypto": "^1.0.1",
         "dotenv": "^16.3.1",
         "env-schema": "^5.2.1",
         "fastify": "^4.24.3",
         "fastify-plugin": "^4.5.1",
-        "jsonwebtoken": "^9.0.2"
+        "jsonwebtoken": "^9.0.2",
+        "nodemailer": "^6.9.7"
     }
 }
