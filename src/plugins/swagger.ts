@@ -1,20 +1,34 @@
 import { FastifyPluginAsync } from "fastify";
 import { fastifyPlugin } from "fastify-plugin";
-import FastifySwagger from "@fastify/swagger";
+import fastifySwagger from "@fastify/swagger";
+import authRoutes from "../modules/auth/auth.route";
+import userRoutes from "../modules/user/user.routes";
+import dashboardRoutes from "../modules/dashboard/dashboard.route";
 
 export default fastifyPlugin<FastifyPluginAsync>(
   async (fastify): Promise<void> => {
-    await fastify.register(FastifySwagger, {
-      exposeRoute: true,
-      routePrefix: "/docs",
-      openapi: {
+    await fastify.register(fastifySwagger, {
+      routePrefix: '/docs',
+      swagger: {
         info: {
-          title: "Fastify sample server",
-          description: "Fastify sample api",
-          version: "0.1.0",
+          title: 'My API',
+          description: 'API documentation',
+          version: '1.0.0'
         },
+        externalDocs: {
+          url: 'https://swagger.io',
+          description: 'Find more info here'
+        },
+        consumes: ['application/json'],
+        produces: ['application/json']
       },
+      exposeRoute: true
     });
+    
+    await fastify.register(userRoutes, { prefix: "users" });
+    await fastify.register(dashboardRoutes, { prefix: "dashboard" });
+    await fastify.register(authRoutes, { prefix: "auth" });
+
   },
   { name: "swagger" }
 );

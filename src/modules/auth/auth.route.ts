@@ -6,27 +6,35 @@ async function authRoutes(server: FastifyInstance) {
   server.route({
     method: "POST",
     url: "/register",
-    schema: { body: registerSchema },
+    schema: {
+      tags: ['auth'],  
+      body: registerSchema },
     handler: authControlleres.register,
   });
 
   server.route({
     method: "POST",
     url: "/login",
-    schema: { body: loginSchema },
+    schema: {
+      tags: ['auth'],  
+      body: loginSchema },
     handler: authControlleres.login,
   });
 
   server.route({
     method: "POST",
     url: "/forgetpassword",
-    schema: { body: forgetpasswordSchema },
+    schema: {
+      tags: ['auth'],  
+      body: forgetpasswordSchema },
     handler: authControlleres.forgetPassword,
   });
   server.route({
     method: "PATCH",
     url: "/resetpassword:resettoken",
-    schema: { body: resetpasswordSchema },
+    schema: {
+      tags: ['auth'],  
+      body: resetpasswordSchema },
     handler: authControlleres.resetPassword,
   });
 }

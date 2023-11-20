@@ -9,25 +9,35 @@ async function userRoutes(server: FastifyInstance) {
   server.route({
     method: "POST",
     url: "/create",
-    schema: { body: createUserSchema },
+    schema: {
+      tags: ['user'],
+      body: createUserSchema },
     handler: userControlleres.createUser,
   });
 
   server.route({
     method: "GET",
     url: "/",
+    schema: {
+      tags: ['user'],
+    },
     handler: userControlleres.getAllUsersHandler,
   });
 
   server.route({
     method: "DELETE",
     url: "/delete/:id",
+    schema: {
+      tags: ['user'],
+    },
     handler: userControlleres.deleteUserHandler,
   });
   server.route({
     method: "PUT",
     url: "/update/:id",
-    schema: { body: createUserSchema },
+    schema: {
+      tags: ['user'],
+      body: createUserSchema },
     handler: userControlleres.updateUserHandler,
   });
 

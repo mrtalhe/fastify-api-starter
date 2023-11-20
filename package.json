@@ -32,7 +32,7 @@
         "@fastify/cors": "^8.4.1",
         "@fastify/express": "^2.3.0",
         "@fastify/mongodb": "^8.0.0",
-        "@fastify/swagger": "^7.0.0",
+        "@fastify/swagger": "^7.4.1",
         "@inaiat/fastify-di-plugin": "^1.1.1",
         "@prisma/client": "^5.5.2",
         "@sinclair/typebox": "^0.31.22",

@@ -11,7 +11,6 @@ import {
 import { Env } from "../../config/app.config";
 import resetPassTempelate from "../../templates/email/forget.js";
 import sendEmail from "../../utils/nodemailer";
-import { emitWarning } from "process";
 class AuthController {
   private userService: UserService;
   private config: Env;

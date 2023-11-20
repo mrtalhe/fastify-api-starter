@@ -10,12 +10,17 @@ async function dashboardRoutes(server: FastifyInstance) {
   server.route({
     method: "GET",
     url: "/profile",
+    schema: {
+      tags: ['dashboard']
+    },
     handler: dashboardControlleres.profile,
   });
   server.route({
     method: "PUT",
     url: "/updateprofile",
-    schema: { body: updateProfileSchema },
+    schema: {
+      tags: ['dashboard'],
+      body: updateProfileSchema },
     handler: dashboardControlleres.updateProfile,
   });
 }
