@@ -1,5 +1,11 @@
 import { FastifyInstance } from "fastify/types/instance";
-import { forgetpasswordSchema, loginSchema, registerSchema, resetpasswordSchema } from "./auth.schema";
+import {
+  forgetpasswordSchema,
+  loginSchema,
+  registerSchema,
+  resetpasswordSchema,
+} from "./auth.schema";
+import { auth } from "../../middleware/auth";
 
 async function authRoutes(server: FastifyInstance) {
   const { authControlleres } = server.diContainer.cradle;
@@ -7,8 +13,9 @@ async function authRoutes(server: FastifyInstance) {
     method: "POST",
     url: "/register",
     schema: {
-      tags: ['auth'],  
-      body: registerSchema },
+      tags: ["auth"],
+      body: registerSchema,
+    },
     handler: authControlleres.register,
   });
 
@@ -16,8 +23,9 @@ async function authRoutes(server: FastifyInstance) {
     method: "POST",
     url: "/login",
     schema: {
-      tags: ['auth'],  
-      body: loginSchema },
+      tags: ["auth"],
+      body: loginSchema,
+    },
     handler: authControlleres.login,
   });
 
@@ -25,17 +33,37 @@ async function authRoutes(server: FastifyInstance) {
     method: "POST",
     url: "/forgetpassword",
     schema: {
-      tags: ['auth'],  
-      body: forgetpasswordSchema },
+      tags: ["auth"],
+      body: forgetpasswordSchema,
+    },
     handler: authControlleres.forgetPassword,
   });
   server.route({
     method: "PATCH",
     url: "/resetpassword:resettoken",
-    schema: {
-      tags: ['auth'],  
-      body: resetpasswordSchema },
     handler: authControlleres.resetPassword,
+    schema: {
+      querystring: {
+        type: "object",
+        properties: {
+          resetToken: {
+            type: "string",
+            description: "resetToken for reset password",
+          },
+        },
+      },
+      tags: ["auth"],
+      body: resetpasswordSchema,
+      response: {
+        200: {
+          description: "Successful response",
+          type: "object",
+          properties: {
+            hello: { type: "string" },
+          },
+        },
+      },
+    },
   });
 }
 

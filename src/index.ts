@@ -1,7 +1,8 @@
 import Fastify, { FastifyInstance } from "fastify";
 import * as dotenv from "dotenv";
 import { appConfig } from "./config/app.config";
-import pluginLoader from "./config/fastify.config";
+import {pluginLoader} from "./config/fastify.config";
+import routes from "./plugins/routes";
 
 const start = async () => {
   dotenv.config();
@@ -9,6 +10,7 @@ const start = async () => {
   const app: FastifyInstance = Fastify({
     logger: true,
   });
+
 
   await app.register(pluginLoader);
   const { PORT, development } = appConfig();

@@ -19,9 +19,12 @@ class DashboardController {
       data: user,
     });
   }
-  async updateProfile(request: FastifyRequest<{Body: updateProfileInput}>, reply: FastifyReply) {
+  async updateProfile(
+    request: FastifyRequest<{ Body: updateProfileInput }>,
+    reply: FastifyReply
+  ) {
     const { id } = request.user;
-    const updateUser = await this.userService.updateUser(request.body, id)
+    const updateUser = await this.userService.updateUser(request.body, id);
     reply.code(200).send({
       message: "profile Updated",
       data: updateUser,

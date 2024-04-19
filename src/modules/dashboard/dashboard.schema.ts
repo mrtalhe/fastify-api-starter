@@ -7,4 +7,3 @@ export const updateProfileSchema = Type.Object({
 });
 
 export type updateProfileInput = Static<typeof updateProfileSchema>;
-

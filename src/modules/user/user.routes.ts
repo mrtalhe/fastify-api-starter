@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify/types/instance";
 import { createUserSchema } from "./user.schema";
-import {auth,isAdmin} from "../../middleware/auth";
-
+import { auth, isAdmin } from "../../middleware/auth";
 
 async function userRoutes(server: FastifyInstance) {
   const { userControlleres } = server.diContainer.cradle;
@@ -10,8 +9,9 @@ async function userRoutes(server: FastifyInstance) {
     method: "POST",
     url: "/create",
     schema: {
-      tags: ['user'],
-      body: createUserSchema },
+      tags: ["user"],
+      body: createUserSchema,
+    },
     handler: userControlleres.createUser,
   });
 
@@ -19,7 +19,7 @@ async function userRoutes(server: FastifyInstance) {
     method: "GET",
     url: "/",
     schema: {
-      tags: ['user'],
+      tags: ["user"],
     },
     handler: userControlleres.getAllUsersHandler,
   });
@@ -28,7 +28,7 @@ async function userRoutes(server: FastifyInstance) {
     method: "DELETE",
     url: "/delete/:id",
     schema: {
-      tags: ['user'],
+      tags: ["user"],
     },
     handler: userControlleres.deleteUserHandler,
   });
@@ -36,11 +36,11 @@ async function userRoutes(server: FastifyInstance) {
     method: "PUT",
     url: "/update/:id",
     schema: {
-      tags: ['user'],
-      body: createUserSchema },
+      tags: ["user"],
+      body: createUserSchema,
+    },
     handler: userControlleres.updateUserHandler,
   });
-
 }
 
 export default userRoutes;

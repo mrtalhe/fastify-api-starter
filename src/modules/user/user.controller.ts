@@ -37,35 +37,41 @@ class UserController {
       data: users,
     });
   }
-  // delete user 
-  async deleteUserHandler(request: FastifyRequest<{ Params: {id: number} }>, reply: FastifyReply){
-    const id = Number(request.params.id)
+  // delete user
+  async deleteUserHandler(
+    request: FastifyRequest<{ Params: { id: number } }>,
+    reply: FastifyReply
+  ) {
+    const id = Number(request.params.id);
     // check user
-    const checkUser = await this.userService.findUserById(id)
-    if(!checkUser){
-      reply.code(404).send({message: "user not Found!"})
+    const checkUser = await this.userService.findUserById(id);
+    if (!checkUser) {
+      reply.code(404).send({ message: "user not Found!" });
     }
     // delete user
-    const user = await this.userService.deleteUser(id)
+    const user = await this.userService.deleteUser(id);
     reply.code(200).send({
       message: "User Deleted successfully",
       data: user,
-    })
+    });
   }
-  // update user 
-  async updateUserHandler(request: FastifyRequest<{ Body: CreateUserInput, Params: {id: number} }>, reply: FastifyReply){
-    const id = Number(request.params.id)
+  // update user
+  async updateUserHandler(
+    request: FastifyRequest<{ Body: CreateUserInput; Params: { id: number } }>,
+    reply: FastifyReply
+  ) {
+    const id = Number(request.params.id);
     // check user
-    const checkUser = await this.userService.findUserById(id)
-    if(!checkUser){
-      reply.code(404).send({message: "user not Found!"})
+    const checkUser = await this.userService.findUserById(id);
+    if (!checkUser) {
+      reply.code(404).send({ message: "user not Found!" });
     }
     // update user
-    const user = await this.userService.updateUser(request.body, id)
+    const user = await this.userService.updateUser(request.body, id);
     reply.code(200).send({
       message: "User updated successfully",
       data: user,
-    })
+    });
   }
 }
 

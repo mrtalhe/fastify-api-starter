@@ -96,8 +96,8 @@ class UserService {
       where: { email: user.email },
       data: {
         resetToken: resetToken,
-        resetExpire: new Date(Date.now() + 5 * 60 * 1000)
-      }
+        resetExpire: new Date(Date.now() + 5 * 60 * 1000),
+      },
     });
     return resetToken;
   }

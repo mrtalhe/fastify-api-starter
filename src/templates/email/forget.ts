@@ -17,7 +17,7 @@ const Style = `
 </style>
 `;
 async function resetPassTemp(token: string) {
-    const template = `
+  const template = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -31,8 +31,7 @@ async function resetPassTemp(token: string) {
         </body>
     </html>
     `;
-    return template;
-};
+  return template;
+}
 
-
-export default resetPassTemp
+export default resetPassTemp;

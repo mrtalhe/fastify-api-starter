@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify/types/instance";
-import autoBind from "auto-bind";
+
 import UserService from "../user/user.service";
 import { FastifyRequest, FastifyReply } from "fastify";
 import {
@@ -11,14 +11,17 @@ import {
 import { Env } from "../../config/app.config";
 import resetPassTempelate from "../../templates/email/forget.js";
 import sendEmail from "../../utils/nodemailer";
+
 class AuthController {
   private userService: UserService;
   private config: Env;
+  private autoBind;
   constructor(private readonly server: FastifyInstance) {
-    const { userServices, appconfig } = this.server.diContainer.cradle;
+    const { userServices, appconfig, autoBind } =
+      this.server.diContainer.cradle;
     this.userService = userServices;
     this.config = appconfig;
-    autoBind(this);
+    this.autoBind = autoBind(this);
   }
   async register(
     request: FastifyRequest<{ Body: RegisterInput }>,
@@ -87,7 +90,7 @@ class AuthController {
     // check user
     const user = await this.userService.findUserByEmail(email);
     if (!user) {
-      reply.code(400).send({
+      return reply.code(400).send({
         message: "'No user found!'",
       });
     }
@@ -112,13 +115,10 @@ class AuthController {
   ) {
     const { password } = request.body;
     const { resetToken } = request.query;
-    await this.userService.resetUserPassword(
-      resetToken,
-      password
-    );
+    await this.userService.resetUserPassword(resetToken, password);
     reply.code(200).send({
       message: "Password successfully retrieved",
-    })
+    });
   }
 }
 export default AuthController;
