@@ -14,7 +14,6 @@ async function auth(
     const secretKey: jwt.Secret = appconfig.JWT_KEY;
     const decoded: any = jwt.verify(token, secretKey);
     const user = await prisma.user.findUnique({ where: { id: decoded.id } });
-    console.log(user);
     if (user) {
       request.user = user;
 
