@@ -1,4 +1,4 @@
-# Fastify Auth-Api With dependency injection Base
+# Fastify Api With dependency injection Base
 
 Follow the steps below to run the project
 
